@@ -7,9 +7,9 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "myapp-${params.ENV}:${params.TAG}"
-        DOCKER_REGISTRY = credentials('docker-registry-url')
+        IMAGE_NAME = "mithundevopsaws/${params.ENV}:${params.TAG}"
         DOCKER_CREDENTIALS = credentials('docker-credentials-id')
+        DOCKER_CREDENTIALS_PSW = credentials('docker-password-id')
     }
 
     stages {
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     echo "Logging in to Docker registry"
-                    sh "echo ${DOCKER_CREDENTIALS_PSW} | docker login ${DOCKER_REGISTRY} -u ${DOCKER_CREDENTIALS_USR} --password-stdin"
+                    sh "echo ${DOCKER_CREDENTIALS_PSW} | sudo docker login -u ${DOCKER_CREDENTIALS} --password-stdin"
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     echo "Building Docker image: ${env.IMAGE_NAME}"
-                    sh "docker build -t ${env.IMAGE_NAME} ."
+                    sh "sudo docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     echo "Pushing Docker image: ${env.IMAGE_NAME}"
-                    sh "docker push ${env.IMAGE_NAME}"
+                    sh "sudo docker push ${IMAGE_NAME}"
                 }
             }
         }
