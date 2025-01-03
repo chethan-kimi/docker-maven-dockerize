@@ -17,7 +17,6 @@ pipeline {
             steps {
                 script {
                     echo "Logging in to Docker registry"
-                    #sh "echo ${DOCKER_CREDENTIALS_PSW} | sudo docker login -u ${DOCKER_CREDENTIALS} --password-stdin"
                      sh 'echo %DOCKER_CREDENTIALS_PSW% | sudo docker login -u $DOCKER_CREDENTIALS --password-stdin'
                 }
             }
