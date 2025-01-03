@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image ') {
             steps {
                 script {
                     echo "Building Docker image: ${env.IMAGE_NAME}"
@@ -31,7 +31,7 @@ pipeline {
             }
         }
 
-        stage('Push') {
+        stage('Push Image to Dockerhub') {
             steps {
                 script {
                     echo "Pushing Docker image: ${env.IMAGE_NAME}"
