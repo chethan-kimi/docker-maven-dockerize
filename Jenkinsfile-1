@@ -19,7 +19,7 @@ pipeline {
 			]){ 
                     echo "Logging in to Docker registry"
 		    sh"""
-			echo \$DOCKER_PASSWORD | sudo docker login -u $DOCKER_USER --password-stdin
+			echo \$DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
 		    """
 			}
                 }
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     echo "Building Docker image: ${env.IMAGE_NAME}"
-                    sh "sudo docker build -t ${IMAGE_NAME} ."
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     echo "Pushing Docker image: ${env.IMAGE_NAME}"
-                    sh "sudo docker push ${IMAGE_NAME}"
+                    sh "docker push ${IMAGE_NAME}"
                 }
             }
         }
